@@ -1,17 +1,22 @@
 const express = require("express");
 const count = require("../middlewares/count");
 const router = express.Router();
+const model = require("../model/MysqlCryptoModel");
+
+const Schema = new model();
 
 router.get('/', (req, res) => {
     res.redirect("/marketplace");
 });
 
 router.get('/marketplace', (req, res)=>{
-    const param = {
-        count: count.length(),
-        coins: ['Bitcoin', 'Etherum', 'Pi', 'Harmony', 'Terra', 'Tether', 'Dogecoin', 'BNB', 'Fantom', 'Litecoin']
-    }
-    res.render("coin_market", param);
+    Schema.getAllCryptoCoins.then((data)=>{
+        const param = {
+            count: count.length(),
+            coins: data
+        }
+        res.json(param);
+    }).catch(err => console.error(err));
 });
 
 router.post('/:id/add', (req, res) => {

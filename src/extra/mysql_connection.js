@@ -10,7 +10,6 @@ const connection = mysql.createConnection({
 
 connection.connect(err => {
     if (err) throw err;
-    console.log("Connection to mysql succesfull.");
 });
 
 const sql4_user = "CREATE TABLE IF NOT EXISTS CryptoUsers (\
@@ -20,7 +19,6 @@ const sql4_user = "CREATE TABLE IF NOT EXISTS CryptoUsers (\
     password CHAR(32) NOT NULL);"
 connection.query(sql4_user, (err, result) => {
     if (err) throw err;
-    console.log("Table created succesfully.");
 })
 
 const sql4_coin = "CREATE TABLE IF NOT EXISTS CryptoCoins (\
@@ -29,7 +27,6 @@ const sql4_coin = "CREATE TABLE IF NOT EXISTS CryptoCoins (\
     value TINYINT(255) UNSIGNED NOT NULL);"
 connection.query(sql4_coin, (err, result) => {
     if (err) throw err;
-    console.log("Table created succesfully.");
 })
 
 const sql4_quantity = "CREATE TABLE IF NOT EXISTS CryptoDistributions (\
@@ -42,7 +39,6 @@ const sql4_quantity = "CREATE TABLE IF NOT EXISTS CryptoDistributions (\
     FOREIGN KEY (coinName) REFERENCES CryptoCoins(coinName));"
 connection.query(sql4_quantity, (err, result) => {
     if (err) throw err;
-    console.log("CryptoDistributions created succesfully.");
 })
 
 module.exports = connection;

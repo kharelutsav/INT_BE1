@@ -11,11 +11,16 @@ html(lang="en")
     body 
         div.top
             p You have #{count} unique coins.
-        div.coins
-            script 
-                const coins = #{coins}
 
-            for coin in coins
-                form.coin(action=coin + "/add" method="POST")
-                    p.one #{coin}
-                    button Buy
+        div.coins
+        - const coinlist = JSON.parse(coins)
+            for coin in coinlist
+                div.coin
+                    p.one coinobj
+
+        //- div.coins
+        //- - const coinlist = JSON.parse(coins)
+        //-     for coin in Object.keys(coinlist)
+        //-         form.coin(action=coin + "/add" method="POST")
+        //-             p.one #{coin} #{jsonobj[coin]}
+        //-             button Buy

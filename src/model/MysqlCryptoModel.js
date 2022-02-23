@@ -1,7 +1,6 @@
+const con = require("../extra/mysql_connection");
+
 class Coins {
-    constructor(con) {
-        this.con = con;
-    }
 
     createCryptoUser(username, email, password){
         const sql = "INSERT INTO TABLE CryptoUser(username, email, password) VALUES (?, ?, ?));"
@@ -21,8 +20,16 @@ class Coins {
         })
     }
 
+    getAllCryptoCoins = new Promise ((resolve, reject) => {
+        const sql = "SELECT coinName, image, value FROM CryptoCoins;"
+        con.query(sql, (err, result)=> {
+            if (err) throw err;
+            resolve(result);
+        });
+    });
+
     validateCoinUser(id, name){
-        sql = "SELECT * FROM CryptoCoins WHERE coinName = ?;"
+        const sql = "SELECT * FROM CryptoCoins WHERE coinName = ?;"
         this.con.query(sql, [name], (err, result)=> {
             if (err) throw err;
             if (result) {
@@ -38,7 +45,7 @@ class Coins {
     }
 
     addCoin(name, id, quantity) {
-        sql = "INSERT INTO CryptoDistributions(clientId, coinName, Quantity) VALUES (?, ?, ?);"
+        const sql = "INSERT INTO CryptoDistributions(clientId, coinName, Quantity) VALUES (?, ?, ?);"
         this.con.query(sql, [id, name, quantity], (err, result)=> {
             if (err) throw err;
             if (result) {
@@ -51,7 +58,7 @@ class Coins {
     }
 
     updateCoin(name, id, quantity){
-        sql = "SELECT Quantity FROM CryptoDistributions WHERE clientId = ? and coinName = ?;";
+        const sql = "SELECT Quantity FROM CryptoDistributions WHERE clientId = ? and coinName = ?;";
         this.con.query(sql, [id, name], (err, result)=> {
             if (err) throw err;
             if (result) {
@@ -66,3 +73,5 @@ class Coins {
         })
     }
 }
+
+module.exports = Coins;
