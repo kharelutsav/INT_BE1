@@ -5,19 +5,21 @@ class Coins {
     createCryptoUser(username, email, password){
         const sql = "INSERT INTO TABLE CryptoUser(username, email, password) VALUES (?, ?, ?));"
         const contents = [username, email, password];
-        this.con.query(sql, contents, (err, results) => {
+        con.query(sql, contents, (err, results) => {
             if (err) throw err;
             log("User created Succesfully.")
-        })
+        });
     }
 
-    createCryptoCoin(name, image, value){
-        const sql = "INSERT INTO TABLE CryptoCoins(name, image, value) VALUES(?, ?, ?));"
-        const contents = [username, email, password];
-        this.con.query(sql, contents, (err, results) => {
-            if (err) throw err;
-            log("Coin created Succesfully.")
-        })
+    createCryptoCoin = (name, image, value) => {
+        new Promise((resolve, reject) => {
+            const sql = "INSERT INTO TABLE CryptoCoins(coinName, image, value) VALUES(?, ?, ?));"
+            const contents = [name, image, value];
+            con.query(sql, contents, (err, result) => {
+                if (err) throw err;
+                resolve(result);
+            });
+        });
     }
 
     getAllCryptoCoins = new Promise ((resolve, reject) => {
@@ -28,49 +30,47 @@ class Coins {
         });
     });
 
-    validateCoinUser(id, name){
-        const sql = "SELECT * FROM CryptoCoins WHERE coinName = ?;"
-        this.con.query(sql, [name], (err, result)=> {
-            if (err) throw err;
-            if (result) {
-                sql = "SELECT * FROM CryptoUsers WHERE clientId = ?;"
-                this.con.query(sql, [id], (err, result)=> {
-                    if (err) throw err;
-                    if (result) {
-                        return true;
+    validateCoinUser = (id, name) => {
+        return new Promise ((resolve, reject) => {
+            const sql = "SELECT * FROM CryptoCoins WHERE coinName = ?;"
+            con.query(sql, [name], (err, result)=> {
+                if (err) throw err;
+                if (result) {
+                    sql = "SELECT * FROM CryptoUsers WHERE clientId = ?;"
+                    this.con.query(sql, [id], (err, result)=> {
+                        if (err) throw err;
+                        resolve(result);
+                        });
                     }
-                    });
-                }
+            });
         });
     }
 
-    addCoin(name, id, quantity) {
-        const sql = "INSERT INTO CryptoDistributions(clientId, coinName, Quantity) VALUES (?, ?, ?);"
-        this.con.query(sql, [id, name, quantity], (err, result)=> {
-            if (err) throw err;
-            if (result) {
-                console.log("Coin data inserted succesfully.");
-                return true;
-            } else {
-                return false;
-            }
-        })
+    addCoin = (name, id, quantity) => {
+        return new Promise ((resolve, reject) => {
+            const sql = "INSERT INTO CryptoDistributions(clientId, coinName, Quantity) VALUES (?, ?, ?);"
+            con.query(sql, [id, name, quantity], (err, result)=> {
+                if (err) throw err;
+                resolve(result);
+            });
+        });
     }
 
-    updateCoin(name, id, quantity){
-        const sql = "SELECT Quantity FROM CryptoDistributions WHERE clientId = ? and coinName = ?;";
-        this.con.query(sql, [id, name], (err, result)=> {
-            if (err) throw err;
-            if (result) {
-                result += quantity;
-                sql = "UPDATE CryptoDistributions SET Quantity = ? WHERE clientId = ? and coinName = ?;"
-                this.con.query(sql, [result, id, name], (err, result) => {
-                    if (err) throw err;
-                    console.log(result);
-                    return true;
-                })
-            }
-        })
+    updateCoin = (name, id, quantity) => {
+        return new Promise ((resolve, reject) => {
+            const sql = "SELECT Quantity FROM CryptoDistributions WHERE clientId = ? and coinName = ?;";
+            con.query(sql, [id, name], (err, result)=> {
+                if (err) throw err;
+                if (result) {
+                    let newQuantity = Number(result[0].Quantity) + Number(quantity);
+                    const sql = "UPDATE CryptoDistributions SET Quantity = ? WHERE clientId = ? and coinName = ?;"
+                    con.query(sql, [newQuantity, id, name], (err, result) => {
+                        if (err) throw err;
+                        resolve(result);
+                    });
+                }
+            });
+        });
     }
 }
 
