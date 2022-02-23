@@ -1,0 +1,18 @@
+doctype html 
+html(lang="en")
+    style.
+        .top{
+            background: grey;
+            color: white
+        }  
+        .coin{
+            background: yellow
+        }
+    body 
+        div.top
+            p You have #{count} unique coins.
+        div.coins
+        - const jsonobj = JSON.parse(coins)
+            for coin in Object.keys(jsonobj)
+                div.coin
+                    p.one #{coin} #{jsonobj[coin]}

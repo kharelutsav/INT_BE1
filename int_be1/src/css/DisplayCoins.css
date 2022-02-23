@@ -1,0 +1,33 @@
+.disp_cont {
+    width: fit-content;
+    margin: auto;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-indent: 5px;
+}
+
+.disp_coins {
+    padding: calc(0.7vh + 0.7vw);
+    margin: calc(7px + 0.4vh + 0.4vw) auto;
+    width: 500px;
+    height: fit-content;
+    background: yellow;
+    border-radius: 28px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.coins {
+    position: absolute;
+    left: 50%;
+}
+
+.btn {
+    border-radius: 2px;
+    margin: auto;
+    padding: 2px;
+    font-size: 18px;
+}

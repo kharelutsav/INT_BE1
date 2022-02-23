@@ -1,0 +1,38 @@
+{
+  "name": "int_be1",
+  "version": "1.0.0",
+  "description": "Bitmosys",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node_modules/.bin/jasmine index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kharelutsav/INT_BE1.git"
+  },
+  "keywords": [
+    "NONE"
+  ],
+  "author": "Kharel Utsav",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kharelutsav/INT_BE1/issues"
+  },
+  "homepage": "https://github.com/kharelutsav/INT_BE1#readme",
+  "devDependencies": {
+    "jasmine": "^4.0.2",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.3",
+    "mysql": "^2.18.1",
+    "pug": "^3.0.2",
+    "react-icons": "^4.3.1",
+    "react-router-dom": "^6.2.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
+  }
+}

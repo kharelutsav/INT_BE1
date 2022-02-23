@@ -1,0 +1,13 @@
+doctype html 
+html(lang="en")
+    style. 
+        .coin{
+            background: yellow
+        }
+    body
+        div.coin
+        - const jsonobj = JSON.parse(coins)
+        
+            for coin in Object.keys(jsonobj)
+                div.coin
+                    p.one #{coin} #{jsonobj[coin]}

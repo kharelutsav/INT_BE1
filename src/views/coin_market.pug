@@ -1,0 +1,21 @@
+doctype html 
+html(lang="en")
+    style.
+        .top{
+            background: grey;
+            color: white
+        }  
+        .coin{
+            background: yellow
+        }
+    body 
+        div.top
+            p You have #{count} unique coins.
+        div.coins
+            script 
+                const coins = #{coins}
+
+            for coin in coins
+                form.coin(action=coin + "/add" method="POST")
+                    p.one #{coin}
+                    button Buy
