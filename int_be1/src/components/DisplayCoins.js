@@ -6,9 +6,12 @@ function CoinContainer({coin}){
   return (
     <>
       <div className='icon'>
-        <img src='#' alt="" /> {coin}
+        <img src='/bitcoin.svg' alt="" width='42px' height='42px' className='inline'/>
       </div>
-      <div className='coins'>
+      <div className='coin-name'>
+        {coin}
+      </div>
+      <div className='coin-count'>
         5
       </div>
       <div>
