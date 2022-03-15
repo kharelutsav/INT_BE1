@@ -32,11 +32,12 @@ connection.query(sql4_coin, (err, result) => {
 const sql4_quantity = "CREATE TABLE IF NOT EXISTS CryptoDistributions (\
     clientId INT,\
     coinName CHAR(25),\
-    Quantity CHAR(25),\
+    Quantity CHAR(25) NOT NULL,\
     INDEX(clientId),\
     INDEX(coinName),\
     FOREIGN KEY (clientId) REFERENCES CryptoUsers(clientId),\
-    FOREIGN KEY (coinName) REFERENCES CryptoCoins(coinName));"
+    FOREIGN KEY (coinName) REFERENCES CryptoCoins(coinName),\
+    UNIQUE(clientId, coinName));"
 connection.query(sql4_quantity, (err, result) => {
     if (err) throw err;
 })

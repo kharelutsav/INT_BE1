@@ -30,23 +30,19 @@ class Coins {
         });
     });
 
-    validateCoinUser = (id, name) => {
+    checkCoinUser = (id, name) => {
         return new Promise ((resolve, reject) => {
-            const sql = "SELECT * FROM CryptoCoins WHERE coinName = ?;"
-            con.query(sql, [name], (err, result)=> {
+            const sql = "SELECT * FROM CryptoDistributions WHERE clientId = ? AND coinName  = ?;"
+            con.query(sql, [id, name], (err, result)=> {
                 if (err) throw err;
                 if (result) {
-                    sql = "SELECT * FROM CryptoUsers WHERE clientId = ?;"
-                    this.con.query(sql, [id], (err, result)=> {
-                        if (err) throw err;
-                        resolve(result);
-                        });
-                    }
+                    resolve(result);
+                };
             });
         });
     }
 
-    addCoin = (name, id, quantity) => {
+    addCoin = (id, name, quantity) => {
         return new Promise ((resolve, reject) => {
             const sql = "INSERT INTO CryptoDistributions(clientId, coinName, Quantity) VALUES (?, ?, ?);"
             con.query(sql, [id, name, quantity], (err, result)=> {
@@ -56,19 +52,12 @@ class Coins {
         });
     }
 
-    updateCoin = (name, id, quantity) => {
+    updateCoin = (id, name, quantity) => {
         return new Promise ((resolve, reject) => {
-            const sql = "SELECT Quantity FROM CryptoDistributions WHERE clientId = ? and coinName = ?;";
-            con.query(sql, [id, name], (err, result)=> {
+            const sql = "UPDATE CryptoDistributions SET Quantity = ? WHERE clientId = ? and coinName = ?;"
+            con.query(sql, [quantity, id, name], (err, result) => {
                 if (err) throw err;
-                if (result) {
-                    let newQuantity = Number(result[0].Quantity) + Number(quantity);
-                    const sql = "UPDATE CryptoDistributions SET Quantity = ? WHERE clientId = ? and coinName = ?;"
-                    con.query(sql, [newQuantity, id, name], (err, result) => {
-                        if (err) throw err;
-                        resolve(result);
-                    });
-                }
+                resolve(result);
             });
         });
     }
