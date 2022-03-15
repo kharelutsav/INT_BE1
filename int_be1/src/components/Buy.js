@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../css/Buy.css';
-import {Link, useLocation} from 'react-router-dom';
+import { Navigate, useLocation} from 'react-router-dom';
 import connection from './axios-setup';
 
 
-function Buy() {
+function Buy({setCoins}) {
   const [amount, setAmount] = useState('');
+  const [redirect, setRedirect] = useState(false);
   const coin_name = useLocation().state;
   const buyCoin = () => {
       connection.post('/user/add', {
@@ -13,8 +14,14 @@ function Buy() {
         'clientId': 1,
         'quantity': amount
       })
-      .then(response => console.log(response))
+      .then(
+        setRedirect(true)
+      )
       .catch(err => console.log(err));
+  }
+
+  if (redirect) {
+    return <Navigate replace to="/"/>
   }
 
   return (
@@ -23,9 +30,7 @@ function Buy() {
         <div className='amount_cont'>
             <p>Amount</p>
             <input value={amount} onChange={event => setAmount(event.target.value)} autoFocus/>
-            <Link to="/">
-              <button onClick={buyCoin}>BUY</button>
-            </Link>
+            <button onClick={buyCoin}>BUY</button>
         </div>
     </div>
   )

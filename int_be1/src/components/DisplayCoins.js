@@ -12,7 +12,6 @@ function DisplayCoins() {
         setCoins(response.data)
     }).catch(err => console.log(err));
   }, []);
-  console.log(coins);
 
   const CurrencyList = coins.map((coin, index) => {
     return <div className='disp_coins' key={index}>
@@ -34,7 +33,7 @@ function DisplayCoins() {
           {coin.Quantity ? coin.Quantity : 0}
         </div>
         <div>
-          <Link to='/buy' state={coin.coinName}>
+          <Link to={'/buy'} state={coin.coinName}>
             <button className='btn'>Buy</button>
           </Link>
         </div>
