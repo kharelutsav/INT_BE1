@@ -35,8 +35,9 @@ router.get('/user/:id/cryptocoins', (req, res) => {
 
 
 // Add Coins
-router.post('/:user/add', (req, res) => {
+router.post('/user/add', (req, res) => {
     const [coinName, clientId, quantity] = [req.body.coinName, req.body.clientId, req.body.quantity]
+    console.log(req.body);
     Schema.checkCoinUser(clientId, coinName)
     .then(data => {
         let newQuantity = Number(quantity) + Number(data[0].Quantity);
@@ -45,7 +46,7 @@ router.post('/:user/add', (req, res) => {
             if (data) res.send(data);
         })
         .catch(err => {
-            res.send("You are not authorized to do so.");
+            res.send("Unable to update.");
         });
     })
     .catch(err => {
@@ -54,7 +55,7 @@ router.post('/:user/add', (req, res) => {
             if (data) res.send(data);
         })
         .catch(err => {
-            res.end("You are not authorized to do so.");
+            res.end("Unable to add.");
         });
     });
 });
