@@ -6,17 +6,8 @@ const model = require("../model/MysqlCryptoModel");
 const Schema = new model();
 
 // Redirect To User Homepage
-// router.get('/', (req, res) => {
-//     res.redirect("/marketplace");
-// });
-
-
-// Get Users Homepage (Version: 1.0)
-router.get('/user/:id/cryptocoins', (req, res) => {
-    Schema.getUserCoins(req.url.split("/")[2])
-    .then(data => {
-        res.json(data);
-    }).catch(err => console.error(err));
+router.get('/', (req, res) => {
+    res.redirect("/marketplace");
 });
 
 
@@ -24,7 +15,22 @@ router.get('/user/:id/cryptocoins', (req, res) => {
 router.get('/marketplace', (req, res)=>{
     Schema.getAllCryptoCoins.then((data)=>{
         res.json(data);
-    }).catch(err => console.error(err));
+    })
+    .catch(err => {
+        res.send("You are not authorized to do so.");
+    });
+});
+
+
+// Get Users Homepage (Version: 1.0)
+router.get('/user/:id/cryptocoins', (req, res) => {
+    Schema.getUserCoins(req.url.split("/")[2])
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        res.send("You are not authorized to do so.");
+    });
 });
 
 

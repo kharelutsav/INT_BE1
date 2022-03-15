@@ -1,38 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/DisplayCoins.css';
 import { Link } from 'react-router-dom';
+import connection from './axios-setup';
 
-function CoinContainer({coin}){
-  const icon = `/${coin.toLowerCase()}.svg`;
-  return (
-    <>
-      <div className='icon'>
-        <img src={icon} alt="" width='39px' height='39px' className='inline'/>
-      </div>
-      <div className='coin-name'>
-        {coin}
-      </div>
-      <div className='coin-count'>
-        5
-      </div>
-      <div>
-        <Link to='/buy' state={coin}>
-          <button className='btn'>Buy</button>
-        </Link>
-      </div>
-    </>
-  );
-}
 
-const coins = ['Bitcoin', 'BNB', 'Dogecoin', 'Etherum', 'Fantom', 'Harmony', 'Litecoin', 'Solana', 'Terra', 'Tether'];
+// const coins = ['Bitcoin', 'BNB', 'Dogecoin', 'Etherum', 'Fantom', 'Harmony', 'Litecoin', 'Solana', 'Terra', 'Tether'];
 
-const CurrencyList = coins.map((coin, index) => {
-  return <div className='disp_coins' key={index}>
-    <CoinContainer coin={coin}/>
-  </div>
-});
+// const CurrencyList = coins.map((coin, index) => {
+//   return <div className='disp_coins' key={index}>
+//     <CoinContainer coin={coin}/>
+//   </div>
+// });
  
 function DisplayCoins() {
+  const [coins, setCoins] = useState([]);
+
+  useEffect(() => {
+    connection.get("/user/1/cryptocoins")
+    .then(response => {
+        setCoins(response.data)
+    }).catch(err => console.log(err));
+  }, []);
+  console.log(coins);
+
+  const CurrencyList = coins.map((coin, index) => {
+    return <div className='disp_coins' key={index}>
+        <CoinContainer coin={coin}/>
+    </div>
+  });
+
+  function CoinContainer({coin}){
+    const icon = `/${coin.coinName.toLowerCase()}.svg`;
+    return (
+      <>
+        <div className='icon'>
+          <img src={icon} alt="" width='39px' height='39px' className='inline'/>
+        </div>
+        <div className='coin-name'>
+          {coin.coinName}
+        </div>
+        <div className='coin-count'>
+          {coin.Quantity ? coin.Quantity : 0}
+        </div>
+        <div>
+          <Link to='/buy' state={coin.coinName}>
+            <button className='btn'>Buy</button>
+          </Link>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className='disp_cont'>
       <div> <b>Cryptocurrencies</b> </div>
@@ -40,5 +58,6 @@ function DisplayCoins() {
     </div>
   )
 }
+
 
 export default DisplayCoins;
