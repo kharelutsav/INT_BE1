@@ -5,11 +5,12 @@ const model = require("../model/MysqlCryptoModel");
 
 const Schema = new model();
 
-// Get user homepage.
+// Redirect To User Homepage
 router.get('/', (req, res) => {
     res.redirect("/marketplace");
 });
 
+// Get User Homepage
 router.get('/marketplace', (req, res)=>{
     Schema.getAllCryptoCoins.then((data)=>{
         const param = {
@@ -19,6 +20,7 @@ router.get('/marketplace', (req, res)=>{
         res.json(param);
     }).catch(err => console.error(err));
 });
+
 
 // Add Coins
 router.post('/:user/add', (req, res) => {
@@ -47,13 +49,5 @@ router.post('/:user/add', (req, res) => {
     });
 });
 
-// For Future
-// router.get('/mycoins', (req, res) => {
-//     const param = {
-//         count: count.length(),
-//         coins: JSON.stringify(count.user_coins),
-//     };
-//     res.render("my_coins", param)
-// });
 
 module.exports = router;
