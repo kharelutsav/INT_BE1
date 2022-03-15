@@ -7,7 +7,7 @@ function CoinContainer({coin}){
   return (
     <>
       <div className='icon'>
-        <img src={icon} alt="" width='42px' height='42px' className='inline'/>
+        <img src={icon} alt="" width='39px' height='39px' className='inline'/>
       </div>
       <div className='coin-name'>
         {coin}
@@ -16,7 +16,7 @@ function CoinContainer({coin}){
         5
       </div>
       <div>
-        <Link to='/buy'>
+        <Link to='/buy' state={coin}>
           <button className='btn'>Buy</button>
         </Link>
       </div>
