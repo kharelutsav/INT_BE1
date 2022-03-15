@@ -3,10 +3,11 @@ import '../css/DisplayCoins.css';
 import { Link } from 'react-router-dom';
 
 function CoinContainer({coin}){
+  const icon = `/${coin.toLowerCase()}.svg`;
   return (
     <>
       <div className='icon'>
-        <img src='/bitcoin.svg' alt="" width='42px' height='42px' className='inline'/>
+        <img src={icon} alt="" width='42px' height='42px' className='inline'/>
       </div>
       <div className='coin-name'>
         {coin}
@@ -23,12 +24,13 @@ function CoinContainer({coin}){
   );
 }
 
-const coins = ['Bitcoin', 'Etherum', 'Pi', 'Harmony', 'Terra', 'Tether', 'Dogecoin', 'BNB', 'Fantom', 'Litecoin'];
-  const CurrencyList = coins.map((coin, index) => {
-    return <div className='disp_coins' key={index}>
-      <CoinContainer coin={coin}/>
-    </div>
-  });
+const coins = ['Bitcoin', 'BNB', 'Dogecoin', 'Etherum', 'Fantom', 'Harmony', 'Litecoin', 'Solana', 'Terra', 'Tether'];
+
+const CurrencyList = coins.map((coin, index) => {
+  return <div className='disp_coins' key={index}>
+    <CoinContainer coin={coin}/>
+  </div>
+});
  
 function DisplayCoins() {
   return (
