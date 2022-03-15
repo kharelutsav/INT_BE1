@@ -1,23 +1,29 @@
 const express = require("express");
-const count = require("../middlewares/count");
+// const count = require("../middlewares/count");
 const router = express.Router();
 const model = require("../model/MysqlCryptoModel");
 
 const Schema = new model();
 
 // Redirect To User Homepage
-router.get('/', (req, res) => {
-    res.redirect("/marketplace");
+// router.get('/', (req, res) => {
+//     res.redirect("/marketplace");
+// });
+
+
+// Get Users Homepage (Version: 1.0)
+router.get('/user/:id/cryptocoins', (req, res) => {
+    Schema.getUserCoins(req.url.split("/")[2])
+    .then(data => {
+        res.json(data);
+    }).catch(err => console.error(err));
 });
 
-// Get User Homepage
+
+// Get Marketplace (Version: 1.0)
 router.get('/marketplace', (req, res)=>{
     Schema.getAllCryptoCoins.then((data)=>{
-        const param = {
-            count: count.length(),
-            coins: data
-        }
-        res.json(param);
+        res.json(data);
     }).catch(err => console.error(err));
 });
 
@@ -33,7 +39,6 @@ router.post('/:user/add', (req, res) => {
             if (data) res.send(data);
         })
         .catch(err => {
-            console.log(err);
             res.send("You are not authorized to do so.");
         });
     })
@@ -43,7 +48,6 @@ router.post('/:user/add', (req, res) => {
             if (data) res.send(data);
         })
         .catch(err => {
-            console.log(err);
             res.end("You are not authorized to do so.");
         });
     });
