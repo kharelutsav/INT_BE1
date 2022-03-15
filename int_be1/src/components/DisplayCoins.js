@@ -4,17 +4,8 @@ import { Link } from 'react-router-dom';
 import connection from './axios-setup';
 
 
-// const coins = ['Bitcoin', 'BNB', 'Dogecoin', 'Etherum', 'Fantom', 'Harmony', 'Litecoin', 'Solana', 'Terra', 'Tether'];
-
-// const CurrencyList = coins.map((coin, index) => {
-//   return <div className='disp_coins' key={index}>
-//     <CoinContainer coin={coin}/>
-//   </div>
-// });
- 
 function DisplayCoins() {
   const [coins, setCoins] = useState([]);
-
   useEffect(() => {
     connection.get("/user/1/cryptocoins")
     .then(response => {

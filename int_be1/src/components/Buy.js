@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/Buy.css';
 import {Link, useLocation} from 'react-router-dom';
+import connection from './axios-setup';
+
 
 function Buy() {
-  const redirect = () => <Link to='/'/>
+  const [amount, setAmount] = useState();
   const coin_name = useLocation().state;
+  const updateData = (data) => {
+      connection.post('/1/add', {
+        'coinName': {coin_name},
+        'clientId': 1,
+        'quantity': {}
+      })
+  }
+
   return (
-    <div className='buy_cont' onBlur={redirect}>
+    <div className='buy_cont'>
         <b>Buy {coin_name}</b>
         <div className='amount_cont'>
             <p>Amount</p>
-            <input autoFocus></input>
+            <input value={amount} onChange={event => setAmount(event.target.value)} autoFocus/>
             <Link to="/">
-              <button>BUY</button>
+              <button onClick={updateData}>BUY</button>
             </Link>
         </div>
     </div>
