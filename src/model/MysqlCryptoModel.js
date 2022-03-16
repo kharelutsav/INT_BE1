@@ -10,6 +10,15 @@ class Coins {
         });
     });
 
+    getUserOwnedCounts = (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT COUNT(coinName) as count FROM CryptoDistributions WHERE clientId = ?";
+            con.query(sql, [id,], (err,result) => {
+                if (result) resolve(result);
+            });
+        });
+    }
+
     getUserCoins = (id) => {
         return new Promise((resolve, reject) => {
             const sql = "SELECT CryptoCoins.coinName, CryptoCoins.image, CryptoDistributions.Quantity \

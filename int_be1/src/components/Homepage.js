@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import UserInfo from './UserInfo';
 import DisplayCoins from './DisplayCoins';
 
 
 function Homepage() {
-  // const [count, setCount] = useState(0);
-
+  const [count, setCount] = useState(0);
   return (
     <>
-        <UserInfo />
-        <DisplayCoins />
+      <UserInfo props={count}/>
+      <DisplayCoins props={setCount}/>
     </>
   )
 }
+
 
 export default Homepage;

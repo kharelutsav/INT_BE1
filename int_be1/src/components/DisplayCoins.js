@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import connection from './axios-setup';
 
 
-function DisplayCoins() {
+function DisplayCoins({setCount}) {
   const [coins, setCoins] = useState([]);
   useEffect(() => {
     connection.get("/user/1/cryptocoins")
@@ -20,7 +20,7 @@ function DisplayCoins() {
   });
 
   function CoinContainer({coin}){
-    const icon = `/${coin.coinName.toLowerCase()}.svg`;
+    const icon = `http://localhost:2057/${coin.coinName.toLowerCase()}.svg`;
     return (
       <>
         <div className='icon'>

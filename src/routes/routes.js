@@ -1,5 +1,4 @@
 const express = require("express");
-// const count = require("../middlewares/count");
 const router = express.Router();
 const model = require("../model/MysqlCryptoModel");
 
@@ -24,7 +23,8 @@ router.get('/marketplace', (req, res)=>{
 
 // Get Users Homepage (Version: 1.0)
 router.get('/user/:id/cryptocoins', (req, res) => {
-    Schema.getUserCoins(req.url.split("/")[2])
+    const uid = req.url.split("/")[2]
+    Schema.getUserCoins(uid)
     .then(data => {
         res.json(data);
     })
@@ -43,7 +43,9 @@ router.post('/user/add', (req, res) => {
         let newQuantity = Number(quantity) + Number(data[0].Quantity);
         Schema.updateCoin(clientId, coinName, newQuantity)
         .then(data => {
-            if (data) res.send(data);
+            if (data) {
+                res.send(data);
+            }
         })
         .catch(err => {
             res.send("Unable to update.");
@@ -52,7 +54,9 @@ router.post('/user/add', (req, res) => {
     .catch(err => {
         Schema.addCoin(clientId, coinName, quantity)
         .then(data => {
-            if (data) res.send(data);
+            if (data) {
+                res.send(data);
+            };
         })
         .catch(err => {
             res.end("Unable to add.");
