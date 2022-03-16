@@ -20,13 +20,19 @@ router.get('/marketplace', (req, res)=>{
     });
 });
 
+const countCoins = (coins) => {
+    const count = coins.filter(data => {
+      return data.Quantity !== null;
+    });
+    return count.length;
+}
 
 // Get Users Homepage (Version: 1.0)
 router.get('/user/:id/cryptocoins', (req, res) => {
     const uid = req.url.split("/")[2]
     Schema.getUserCoins(uid)
     .then(data => {
-        res.json(data);
+        res.json({count: countCoins(data), coins: data});
     })
     .catch(err => {
         res.send("You are not authorized to do so.");

@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../css/DisplayCoins.css';
 import { Link } from 'react-router-dom';
-import connection from './axios-setup';
 
 
-function DisplayCoins({setCount}) {
-  const [coins, setCoins] = useState([]);
-  useEffect(() => {
-    connection.get("/user/1/cryptocoins")
-    .then(response => {
-        setCoins(response.data)
-    }).catch(err => console.log(err));
-  }, []);
+function DisplayCoins(props) {
+  const coins = props.coins
 
   const CurrencyList = coins.map((coin, index) => {
     return <div className='disp_coins' key={index}>
