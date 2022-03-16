@@ -22,7 +22,7 @@ router.get('/marketplace', (req, res)=>{
 
 const countCoins = (coins) => {
     const count = coins.filter(data => {
-      return data.Quantity !== null;
+      return data.Quantity !== null && data.Quantity !== '0';
     });
     return count.length;
 }
